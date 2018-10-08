@@ -1,7 +1,7 @@
 #!/bin/sh
 
-API="http://localhost:4741"
-URL_PATH="/edaman"
+API="https://api.edamam.com/search"
+
 
 curl "${API}${URL_PATH}" \
   --include \
@@ -9,7 +9,7 @@ curl "${API}${URL_PATH}" \
   --header "Content-Type: application/json" \
   --data '{
     "recipe": {
-      "ingredient": "chicken"
+      "search": "chicken parm"
     }
   }'
 echo
