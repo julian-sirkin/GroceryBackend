@@ -6,5 +6,9 @@ URL_PATH="/edaman"
 curl "${API}${URL_PATH}" \
   --include \
   --request GET \
-
+  --data '{
+    "recipe": {
+      "ingredient": "chicken"
+    }
+  }'
 echo
