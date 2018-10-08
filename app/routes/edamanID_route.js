@@ -22,23 +22,21 @@ router.get('/edamanID', (req, res) => {
   const recipeId = req.body.recipe.recipeId
 
   // Edaman url
-  let edamanUrl = `https://api.edamam.com/search?&app_id=${edamanId}&app_key=${edamanKey}&r=`
+  let edamanUrl = `https://api.edamam.com/search?&app_id=${edamanId}&app_key=${edamanKey}`
 
   // Add all Recipe ids to the request
   for (let key in recipeId) {
-    edamanUrl += recipeId[key] + '&'
+    edamanUrl += '&r=' + recipeId[key]
   }
-  // Remove the last & Symbol
-  edamanUrl = edamanUrl.substring(0, edamanUrl.length - 1)
   console.log(edamanUrl)
 
   // Call to
-  // axios.get(edamanUrl + searchParam)
-  //   .then(function (response) {
-  //     const recipes = response.data.hits
-  //     return res.status(200).json({ body: recipes })
-  //   })
-  return res.status(200).json({ body: 'recipes' })
+  axios.get(edamanUrl)
+    .then(function (response) {
+      console.log('response from API', response.data)
+      const recipes = response.data
+      return res.status(200).json({ body: recipes })
+    })
 })
 
 module.exports = router
