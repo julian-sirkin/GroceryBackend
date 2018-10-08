@@ -1,11 +1,12 @@
 #!/bin/sh
 
-API="http://www.amazon.com/afx/ingredients/verify"
+API="http://www.amazon.com/afx/ingredients/landing"
 URL_PATH=
 
 curl "${API}" \
   --include \
   --request POST \
+  --header "Content-Type: application/json" \
   --data '{
   "ingredients": [
     {
