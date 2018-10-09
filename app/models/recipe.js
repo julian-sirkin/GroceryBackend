@@ -1,13 +1,14 @@
 const mongoose = require('mongoose')
 
 const recipeSchema = new mongoose.Schema({
-  recipe: {
+  recipeId: {
     type: String,
     required: true
   },
-  dietaryRestricion: {
-    type: Array,
-    required: false
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   }
 }, {
   timestamps: true

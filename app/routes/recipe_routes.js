@@ -61,7 +61,6 @@ router.get('/recipes/:id', requireToken, (req, res) => {
 router.post('/recipes', requireToken, (req, res) => {
   // set owner of new recipe to be current user
   req.body.recipe.owner = req.user.id
-
   Recipe.create(req.body.recipe)
     // respond to succesful `create` with status 201 and JSON of new "recipe"
     .then(recipe => {
