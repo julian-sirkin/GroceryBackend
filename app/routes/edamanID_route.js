@@ -28,6 +28,7 @@ router.get('/edamanID', (req, res) => {
   for (let key in recipeId) {
     edamanUrl += '&r=' + recipeId[key]
   }
+  // Remove the last & Symbol
   console.log(edamanUrl)
 
   // Call to
@@ -37,6 +38,7 @@ router.get('/edamanID', (req, res) => {
       const recipes = response.data
       return res.status(200).json({ body: recipes })
     })
+
 })
 
 module.exports = router
