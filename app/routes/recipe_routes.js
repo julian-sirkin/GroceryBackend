@@ -28,6 +28,14 @@ const requireToken = passport.authenticate('bearer', { session: false })
 // instantiate a router (mini app that only handles routes)
 const router = express.Router()
 
+// Require dotenv to get keys for API
+const dotenv = require('dotenv')
+dotenv.config()
+const edamanId = process.env.EDAMAN_APPLICATION_ID
+const edamanKey = process.env.EDAMAN_APPLICATION_KEY
+const axios = require('axios')
+
+
 // INDEX
 // GET /recipes
 router.get('/recipes', requireToken, (req, res) => {
@@ -36,11 +44,37 @@ router.get('/recipes', requireToken, (req, res) => {
       // `recipes` will be an array of Mongoose documents
       // we want to convert each one to a POJO, so we use `.map` to
       // apply `.toObject` to each one
-      return recipes.map(recipe => recipe.toObject())
+      const savedRecipes = recipes.map(recipe => recipe.toObject())
+      // Create an emptry array to push to
+      const userRecipes = []
+      savedRecipes.forEach(recipe => {
+        // Compares owner id to user id
+        if (recipe.owner == req.user.id) {
+          userRecipes.push(recipe)
+        }
+      })
+      // UserRecipes is now an array filled with objects
+      // That have a key of .recipeId that I can then use to call the third party api
+      //Base URL to send to
+      let edamanUrl = `https://api.edamam.com/search?&app_id=${edamanId}&app_key=${edamanKey}`
+      // Add all IDs of recipes to URL
+      for (var i = 0; i < userRecipes.length; i++) {
+        // The enculdeURIComponent is there because each Id is a url
+        // Without encoding it, this call fails
+        edamanUrl += '&r=' + encodeURIComponent(userRecipes[i].recipeId)
+      }
+      return edamanUrl
     })
-    // respond with status 200 and JSON of the recipes
-    .then(recipes => res.status(200).json({ recipes: recipes }))
-    // if an error occurs, pass it to the handler
+    .then(edamanUrl => {
+      console.log(edamanUrl, 'url for call')
+      // Get call to third party Api
+      axios.get(edamanUrl)
+        .then(function (response) {
+          const recipes = response.data
+          return res.status(200).json({ body: recipes })
+        })
+        .catch(err => handle(err, res))
+    })
     .catch(err => handle(err, res))
 })
 
