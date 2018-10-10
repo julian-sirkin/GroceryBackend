@@ -9,7 +9,7 @@ const recipeRoutes = require('./app/routes/recipe_routes')
 const userRoutes = require('./app/routes/user_routes')
 const edamanRoutes = require('./app/routes/edaman_routes')
 const edamanId = require('./app/routes/edamanID_route')
-
+const amazonFreshRoute = require('./app/routes/amazon_grocery_route')
 // require database configuration logic
 // `db` will be the actual Mongo URI as a string
 const db = require('./config/db')
@@ -75,6 +75,7 @@ app.use(recipeRoutes)
 app.use(userRoutes)
 app.use(edamanRoutes)
 app.use(edamanId)
+app.use(amazonFreshRoute)
 
 // run API on designated port (4741 in this case)
 app.listen(port, () => {
