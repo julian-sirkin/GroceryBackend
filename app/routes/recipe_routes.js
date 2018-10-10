@@ -63,14 +63,23 @@ router.get('/recipes', requireToken, (req, res) => {
         // Without encoding it, this call fails
         edamanUrl += '&r=' + encodeURIComponent(userRecipes[i].recipeId)
       }
-      return edamanUrl
+      // Pass an object with the URL for the Axios call, and the array
+      // with the user Ids
+      return {
+        url: edamanUrl,
+        IdArr: userRecipes
+      }
     })
     .then(edamanUrl => {
       console.log(edamanUrl, 'url for call')
       // Get call to third party Api
-      axios.get(edamanUrl)
+      axios.get(edamanUrl.url)
         .then(function (response) {
           const recipes = response.data
+
+          for (var i = 0; i < recipes.length; i++) {
+            recipes[i].userDbId = edamanUrl.IdArr[i]._id
+          }
           return res.status(200).json({ body: recipes })
         })
         .catch(err => handle(err, res))
