@@ -6,7 +6,6 @@ const dotenv = require('dotenv')
 dotenv.config()
 
 const router = express.Router()
-const handle = require('../../lib/error_handler')
 
 const app = express()
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -20,21 +19,6 @@ router.get('/edaman', (req, res) => {
   const searchParam = encodeURIComponent(req.query.recipe.search)
   // Edaman url
   const edamanUrl = `https://api.edamam.com/search?&app_id=${edamanId}&app_key=${edamanKey}&q=${searchParam}`
-
-  app.use(function (req, res, next) {
-    // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'https://julian-sirkin.github.io')
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET');
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type')
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', true)
-    // Pass to next layer of middleware
-    next()
-})
-
 
   // Call to
   axios.get(edamanUrl)
