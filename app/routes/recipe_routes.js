@@ -45,7 +45,7 @@ router.get('/recipes', requireToken, (req, res) => {
       // we want to convert each one to a POJO, so we use `.map` to
       // apply `.toObject` to each one
       const savedRecipes = recipes.map(recipe => recipe.toObject())
-      // Create an emptry array to push to
+      // Create an empty array to push to
       const userRecipes = []
       savedRecipes.forEach(recipe => {
         // Compares owner id to user id

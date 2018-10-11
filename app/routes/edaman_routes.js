@@ -6,7 +6,7 @@ const dotenv = require('dotenv')
 dotenv.config()
 
 const router = express.Router()
-
+const handle = require('../../lib/error_handler')
 
 const app = express()
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -27,6 +27,7 @@ router.get('/edaman', (req, res) => {
       const recipes = response.data.hits
       return res.status(200).json({ body: recipes })
     })
+    .catch(err => handle(err, res))
   // return res.status(200).json({ body: 'recipes' })
 })
 

@@ -15,8 +15,8 @@ router.post('/amazonshopping', (req, res) => {
   axios.post(amazonUrl, data, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
-      'Origin': 'localhost:4741',
-      'Referer': 'localhost:4741/#'
+      'Origin': 'https://julian-sirkin.github.io/groceryFrontEnd/',
+      'Referer': 'https://julian-sirkin.github.io/groceryFrontEnd/'
     }
   }
   )
