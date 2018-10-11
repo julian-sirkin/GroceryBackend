@@ -27,7 +27,7 @@ router.get('/edaman', (req, res) => {
       const recipes = response.data.hits
       return res.status(200).json({ body: recipes })
     })
-    .catch(err => handle(err, res))
+    .catch('fail')
   // return res.status(200).json({ body: 'recipes' })
 })
 
