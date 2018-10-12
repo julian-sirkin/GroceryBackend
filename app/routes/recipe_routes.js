@@ -55,7 +55,7 @@ router.get('/recipes', requireToken, (req, res) => {
       })
       // UserRecipes is now an array filled with objects
       // That have a key of .recipeId that I can then use to call the third party api
-      //Base URL to send to
+      // Base URL to send to
       let edamanUrl = `https://api.edamam.com/search?&app_id=${edamanId}&app_key=${edamanKey}`
       // Add all IDs of recipes to URL
       for (var i = 0; i < userRecipes.length; i++) {
@@ -70,15 +70,16 @@ router.get('/recipes', requireToken, (req, res) => {
         IdArr: userRecipes
       }
     })
-    .then(edamanUrl => {
-      console.log(edamanUrl, 'url for call')
+    .then(dataObj => {
       // Get call to third party Api
-      axios.get(edamanUrl.url)
+      axios.get(dataObj.url)
         .then(function (response) {
           const recipes = response.data
 
           for (var i = 0; i < recipes.length; i++) {
-            recipes[i].userDbId = edamanUrl.IdArr[i]._id
+            // Add on the id of each recipe within database to the
+            // Object returned from API
+            recipes[i].userDbId = dataObj.IdArr[i]._id
           }
           return res.status(200).json({ body: recipes })
         })
