@@ -11,7 +11,6 @@ router.post('/amazonshopping', (req, res) => {
   const amazonUrl = 'http://www.amazon.com/afx/ingredients/landing'
   // Grab information to send to amazon from incomming post request
   const data = req.body
-  console.log('information passing into axios', data)
   axios.post(amazonUrl, data, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',

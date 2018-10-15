@@ -17,7 +17,7 @@ router.get('/edaman', (req, res) => {
   const edamanKey = process.env.EDAMAN_APPLICATION_KEY
   // Get the serach parameter from the json sent
   const searchParam = encodeURIComponent(req.query.recipe.search)
-  // Edaman url
+  // Edamam url
   const edamanUrl = `https://api.edamam.com/search?&app_id=${edamanId}&app_key=${edamanKey}&q=${searchParam}`
 
   // Call to

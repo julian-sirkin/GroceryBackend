@@ -29,12 +29,10 @@ router.get('/edamanID', (req, res) => {
     edamanUrl += '&r=' + recipeId[key]
   }
   // Remove the last & Symbol
-  console.log(edamanUrl)
 
   // Call to
   axios.get(edamanUrl)
     .then(function (response) {
-      console.log('response from API', response.data)
       const recipes = response.data
       return res.status(200).json({ body: recipes })
     })
